@@ -16,7 +16,18 @@ export function Login() {
     const success = await login({ email, password });
     setIsLoading(false);
     if (success) {
-      navigate('/');
+      // Obtener usuario del localStorage para verificar rol
+      const savedUser = localStorage.getItem('user');
+      if (savedUser) {
+        const user = JSON.parse(savedUser);
+        if (user.role === 'ADMIN') {
+          navigate('/admin');
+        } else {
+          navigate('/');
+        }
+      } else {
+        navigate('/');
+      }
     }
   };
 
@@ -54,7 +65,7 @@ export function Login() {
           {/* Form Card */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
             <h1 className="text-2xl font-semibold text-gray-900 mb-8">
-              Sign in
+              Iniciar Sesión
             </h1>
 
             <form onSubmit={handleSubmit}>
@@ -81,19 +92,16 @@ export function Login() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="px-8 py-2.5 bg-gray-100 text-gray-700 rounded-md font-medium
-                    hover:bg-primary-600 hover:text-white
-                    disabled:opacity-50 disabled:cursor-not-allowed
-                    transition-all duration-200"
+                  className="btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isLoading ? 'Signing in...' : 'Sign in'}
+                  {isLoading ? 'Ingresando...' : 'Ingresar'}
                 </button>
 
                 <Link 
                   to="/recuperar" 
-                  className="text-sm text-primary-600 hover:text-primary-700 hover:underline"
+                  className="text-sm text-indigo-600 hover:text-indigo-700 hover:underline"
                 >
-                  Forgot password?
+                  ¿Olvidaste tu contraseña?
                 </Link>
               </div>
             </form>
@@ -111,10 +119,7 @@ export function Login() {
             {/* Google Sign In */}
             <button
               type="button"
-              className="w-full flex items-center justify-center gap-3 px-4 py-2.5
-                border border-gray-300 rounded-md
-                text-gray-700 font-medium
-                hover:bg-gray-50 transition-colors duration-200"
+              className="btn btn-neutral w-full flex items-center justify-center gap-3"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
@@ -134,17 +139,17 @@ export function Login() {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                 />
               </svg>
-              Sign in with Google
+              Ingresar con Google
             </button>
 
             {/* Register Link */}
             <p className="mt-8 text-center text-sm text-gray-600">
-              Don't have an account?{' '}
+              ¿No tienes cuenta?{' '}
               <Link 
                 to="/registro" 
-                className="text-primary-600 hover:text-primary-700 font-medium hover:underline"
+                className="text-indigo-600 hover:text-indigo-700 font-medium hover:underline"
               >
-                Register now
+                Regístrate ahora
               </Link>
             </p>
           </div>
