@@ -4,12 +4,14 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { Layout } from './components/layout/Layout';
+import { AdminLayout } from './components/admin';
 import { Home } from './pages/Home';
 import { Products } from './pages/Products';
 import { ProductDetail } from './pages/ProductDetail';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Cart } from './pages/Cart';
+import { AdminDashboard, AdminProducts, AdminProductForm } from './pages/admin';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,6 +32,14 @@ function App() {
               {/* Auth pages - sin Layout */}
               <Route path="login" element={<Login />} />
               <Route path="registro" element={<Register />} />
+              
+              {/* Admin pages - con AdminLayout */}
+              <Route path="admin" element={<AdminLayout />}>
+                <Route index element={<AdminDashboard />} />
+                <Route path="productos" element={<AdminProducts />} />
+                <Route path="productos/nuevo" element={<AdminProductForm />} />
+                <Route path="productos/:id/editar" element={<AdminProductForm />} />
+              </Route>
               
               {/* Main pages - con Layout */}
               <Route path="/" element={<Layout />}>
