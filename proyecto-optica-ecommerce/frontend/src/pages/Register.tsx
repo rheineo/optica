@@ -1,13 +1,24 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Mail, Lock, User, Phone } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, User, Phone, CreditCard } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+
+const TIPOS_DOCUMENTO = [
+  { value: '', label: 'Seleccionar...' },
+  { value: 'CC', label: 'Cédula de Ciudadanía' },
+  { value: 'CE', label: 'Cédula de Extranjería' },
+  { value: 'TI', label: 'Tarjeta de Identidad' },
+  { value: 'PASAPORTE', label: 'Pasaporte' },
+  { value: 'NIT', label: 'NIT' },
+];
 
 export function Register() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
+    tipoDocumento: '',
+    numeroDocumento: '',
     password: '',
     confirmPassword: '',
   });
@@ -17,7 +28,7 @@ export function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError('');
   };
@@ -40,6 +51,8 @@ export function Register() {
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
+      tipoDocumento: formData.tipoDocumento || undefined,
+      numeroDocumento: formData.numeroDocumento || undefined,
       password: formData.password,
     });
     setIsLoading(false);
@@ -117,6 +130,44 @@ export function Register() {
                   placeholder="300 123 4567"
                 />
                 <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="tipoDocumento" className="block text-sm font-medium text-gray-700 mb-2">
+                  Tipo de Documento
+                </label>
+                <div className="relative">
+                  <select
+                    id="tipoDocumento"
+                    name="tipoDocumento"
+                    value={formData.tipoDocumento}
+                    onChange={handleChange}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent appearance-none bg-white"
+                  >
+                    {TIPOS_DOCUMENTO.map((tipo) => (
+                      <option key={tipo.value} value={tipo.value}>
+                        {tipo.label}
+                      </option>
+                    ))}
+                  </select>
+                  <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                </div>
+              </div>
+              <div>
+                <label htmlFor="numeroDocumento" className="block text-sm font-medium text-gray-700 mb-2">
+                  Número de Documento
+                </label>
+                <input
+                  id="numeroDocumento"
+                  name="numeroDocumento"
+                  type="text"
+                  value={formData.numeroDocumento}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  placeholder="1234567890"
+                />
               </div>
             </div>
 

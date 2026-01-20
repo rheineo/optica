@@ -10,6 +10,8 @@ import { Products } from './pages/Products';
 import { ProductDetail } from './pages/ProductDetail';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
+import { ForgotPassword } from './pages/ForgotPassword';
+import { ResetPassword } from './pages/ResetPassword';
 import { Cart } from './pages/Cart';
 import { AdminDashboard, AdminProducts, AdminProductForm, AdminOrders, AdminOrderDetail, AdminUsers, AdminUserDetail } from './pages/admin';
 
@@ -32,6 +34,8 @@ function App() {
               {/* Auth pages - sin Layout */}
               <Route path="login" element={<Login />} />
               <Route path="registro" element={<Register />} />
+              <Route path="recuperar" element={<ForgotPassword />} />
+              <Route path="reset-password" element={<ResetPassword />} />
               
               {/* Admin pages - con AdminLayout */}
               <Route path="admin" element={<AdminLayout />}>

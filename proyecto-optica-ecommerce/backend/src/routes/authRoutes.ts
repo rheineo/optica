@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { register, login, getMe } from '../controllers/authController';
+import { register, login, getMe, forgotPassword, resetPassword, validateResetToken } from '../controllers/authController';
 import { authMiddleware } from '../middlewares/authMiddleware';
 
 const router = Router();
@@ -72,5 +72,10 @@ const router = Router();
 router.post('/register', register);
 router.post('/login', login);
 router.get('/me', authMiddleware, getMe);
+
+// Recuperación de contraseña
+router.post('/forgot-password', forgotPassword);
+router.post('/reset-password', resetPassword);
+router.get('/validate-reset-token/:token', validateResetToken);
 
 export default router;
