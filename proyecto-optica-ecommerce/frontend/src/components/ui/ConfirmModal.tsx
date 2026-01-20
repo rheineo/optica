@@ -10,7 +10,8 @@ interface ConfirmModalProps {
   confirmText?: string;
   cancelText?: string;
   isLoading?: boolean;
-  variant?: 'danger' | 'warning';
+  variant?: 'danger' | 'warning' | 'primary';
+  confirmVariant?: 'danger' | 'warning' | 'primary';
 }
 
 export function ConfirmModal({
@@ -19,11 +20,13 @@ export function ConfirmModal({
   onConfirm,
   title,
   message,
-  confirmText = 'Eliminar',
+  confirmText = 'Confirmar',
   cancelText = 'Cancelar',
   isLoading = false,
-  variant = 'danger',
+  variant,
+  confirmVariant,
 }: ConfirmModalProps) {
+  const buttonVariant = confirmVariant || variant || 'danger';
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -52,7 +55,19 @@ export function ConfirmModal({
 
   if (!isOpen) return null;
 
-  const iconColor = variant === 'danger' ? 'bg-red-100 text-red-600' : 'bg-amber-100 text-amber-600';
+  const iconColors: Record<string, string> = {
+    danger: 'bg-red-100 text-red-600',
+    warning: 'bg-amber-100 text-amber-600',
+    primary: 'bg-indigo-100 text-indigo-600',
+  };
+  const iconColor = iconColors[buttonVariant] || iconColors.danger;
+
+  const buttonClasses: Record<string, string> = {
+    danger: 'btn btn-danger',
+    warning: 'btn btn-warning',
+    primary: 'btn btn-primary',
+  };
+  const confirmButtonClass = buttonClasses[buttonVariant] || buttonClasses.danger;
 
   return (
     <div
@@ -104,9 +119,9 @@ export function ConfirmModal({
             type="button"
             onClick={onConfirm}
             disabled={isLoading}
-            className="btn btn-danger disabled:opacity-50"
+            className={`${confirmButtonClass} disabled:opacity-50`}
           >
-            {isLoading ? 'Eliminando...' : confirmText}
+            {isLoading ? 'Procesando...' : confirmText}
           </button>
         </div>
       </div>

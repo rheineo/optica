@@ -11,7 +11,7 @@ import { ProductDetail } from './pages/ProductDetail';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Cart } from './pages/Cart';
-import { AdminDashboard, AdminProducts, AdminProductForm, AdminOrders, AdminOrderDetail } from './pages/admin';
+import { AdminDashboard, AdminProducts, AdminProductForm, AdminOrders, AdminOrderDetail, AdminUsers, AdminUserDetail } from './pages/admin';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,6 +41,8 @@ function App() {
                 <Route path="productos/:id/editar" element={<AdminProductForm />} />
                 <Route path="pedidos" element={<AdminOrders />} />
                 <Route path="pedidos/:id" element={<AdminOrderDetail />} />
+                <Route path="usuarios" element={<AdminUsers />} />
+                <Route path="usuarios/:id" element={<AdminUserDetail />} />
               </Route>
               
               {/* Main pages - con Layout */}

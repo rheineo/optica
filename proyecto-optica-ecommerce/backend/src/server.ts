@@ -10,6 +10,7 @@ import authRoutes from './routes/authRoutes';
 import productsRoutes from './routes/productsRoutes';
 import cartRoutes from './routes/cartRoutes';
 import adminOrdersRoutes from './routes/adminOrdersRoutes';
+import adminUsersRoutes from './routes/adminUsersRoutes';
 
 const app = express();
 
@@ -48,6 +49,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productsRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/admin/orders', adminOrdersRoutes);
+app.use('/api/admin/users', adminUsersRoutes);
 
 // Ruta de health check
 app.get('/api/health', (req, res) => {

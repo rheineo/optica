@@ -3,3 +3,5 @@ export { AdminProducts } from './AdminProducts';
 export { AdminProductForm } from './AdminProductForm';
 export { AdminOrders } from './AdminOrders';
 export { AdminOrderDetail } from './AdminOrderDetail';
+export { AdminUsers } from './AdminUsers';
+export { AdminUserDetail } from './AdminUserDetail';

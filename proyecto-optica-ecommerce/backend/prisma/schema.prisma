@@ -16,6 +16,23 @@ datasource db {
 enum Role {
   CLIENTE
   ADMIN
+  SUPER_ADMIN
+}
+
+enum EstadoCuenta {
+  ACTIVO
+  INACTIVO
+  BLOQUEADO
+  PENDIENTE
+  ELIMINADO
+}
+
+enum NivelCliente {
+  NUEVO
+  REGULAR
+  FRECUENTE
+  VIP
+  PLATINUM
 }
 
 enum Categoria {
@@ -54,18 +71,51 @@ enum MetodoPago {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  name          String
-  password      String
-  phone         String?
-  role          Role      @default(CLIENTE)
-  emailVerified DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  orders        Order[]
-  addresses     Address[]
-  cart          Cart?
+  id              String        @id @default(cuid())
+  email           String        @unique
+  name            String
+  password        String
+  phone           String?
+  role            Role          @default(CLIENTE)
+  estado          EstadoCuenta  @default(ACTIVO)
+  nivelCliente    NivelCliente  @default(NUEVO)
+  
+  // Verificaciones
+  emailVerified   Boolean       @default(false)
+  emailVerifiedAt DateTime?
+  phoneVerified   Boolean       @default(false)
+  
+  // Seguridad
+  lastLogin       DateTime?
+  loginAttempts   Int           @default(0)
+  blockedAt       DateTime?
+  blockedBy       String?
+  motivoBloqueo   String?
+  
+  // Soft delete
+  deletedAt       DateTime?
+  deletedBy       String?
+  
+  // Notas admin
+  notasInternas   String?       @db.Text
+  etiquetas       String[]
+  
+  // Estadísticas
+  totalCompras    Int           @default(0)
+  totalGastado    Float         @default(0)
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  orders          Order[]
+  addresses       Address[]
+  cart            Cart?
+
+  @@index([email])
+  @@index([role])
+  @@index([estado])
+  @@index([nivelCliente])
+  @@index([createdAt])
 }
 
 model Category {
