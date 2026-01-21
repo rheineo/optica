@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Save, Plus, X } from 'lucide-react';
+import { ArrowLeft, Save } from 'lucide-react';
 import { adminApi } from '../../api/admin';
 import type { ProductFormData } from '../../api/admin';
 import type { Category } from '../../types';
 import { productsApi } from '../../api/products';
+import { ImageUploader } from '../../components/admin/ImageUploader';
 import toast from 'react-hot-toast';
 
 const CATEGORIAS = [
@@ -37,7 +38,6 @@ export function AdminProductForm() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [newImageUrl, setNewImageUrl] = useState('');
 
   useEffect(() => {
     fetchCategories();
@@ -92,23 +92,6 @@ export function AdminProductForm() {
     setFormData((prev) => ({
       ...prev,
       [name]: type === 'number' ? parseFloat(value) || 0 : value,
-    }));
-  };
-
-  const handleAddImage = () => {
-    if (newImageUrl.trim()) {
-      setFormData((prev) => ({
-        ...prev,
-        imagenes: [...prev.imagenes, newImageUrl.trim()],
-      }));
-      setNewImageUrl('');
-    }
-  };
-
-  const handleRemoveImage = (index: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      imagenes: prev.imagenes.filter((_, i) => i !== index),
     }));
   };
 
@@ -338,52 +321,11 @@ export function AdminProductForm() {
         {/* Images */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-4">
           <h2 className="text-base font-semibold text-gray-900 mb-3">Imágenes</h2>
-          
-          <div className="flex gap-3 mb-3">
-            <input
-              type="url"
-              value={newImageUrl}
-              onChange={(e) => setNewImageUrl(e.target.value)}
-              placeholder="URL de la imagen"
-              className="input flex-1"
-            />
-            <button
-              type="button"
-              onClick={handleAddImage}
-              className="btn btn-secondary"
-            >
-              <Plus className="w-4 h-4" />
-              Agregar
-            </button>
-          </div>
-
-          {formData.imagenes.length > 0 && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {formData.imagenes.map((url, index) => (
-                <div key={index} className="relative group">
-                  <img
-                    src={url}
-                    alt={`Imagen ${index + 1}`}
-                    className="w-full h-32 object-cover rounded-lg"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = 'https://placehold.co/200x200/e2e8f0/64748b?text=Error';
-                    }}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveImage(index)}
-                    className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {formData.imagenes.length === 0 && (
-            <p className="text-gray-500 text-sm">No hay imágenes agregadas</p>
-          )}
+          <ImageUploader
+            images={formData.imagenes}
+            onChange={(imagenes) => setFormData((prev) => ({ ...prev, imagenes }))}
+            maxImages={10}
+          />
         </div>
 
         {/* Actions */}
