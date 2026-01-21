@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Eye } from 'lucide-react';
 import type { Product } from '../../types';
 import { formatPrice, getCategoryLabel } from '../../utils/formatters';
@@ -13,14 +13,22 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
   const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     if (!isAuthenticated) {
       toast.error('Inicia sesión para agregar al carrito');
       return;
     }
     await addToCart(product.id);
+  };
+
+  const handleViewProduct = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigate(`/producto/${product.id}`);
   };
 
   const finalPrice = product.descuento
@@ -64,12 +72,12 @@ export function ProductCard({ product }: ProductCardProps) {
             >
               <ShoppingCart className="w-5 h-5" />
             </button>
-            <Link
-              to={`/producto/${product.id}`}
+            <button
+              onClick={handleViewProduct}
               className="bg-white text-gray-900 p-3 rounded-full hover:bg-primary-600 hover:text-white transition-colors"
             >
               <Eye className="w-5 h-5" />
-            </Link>
+            </button>
           </div>
         </div>
       </Link>

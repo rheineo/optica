@@ -13,6 +13,7 @@ import adminOrdersRoutes from './routes/adminOrdersRoutes';
 import adminUsersRoutes from './routes/adminUsersRoutes';
 import configRoutes from './routes/configRoutes';
 import uploadRoutes from './routes/uploadRoutes';
+import domainRoutes from './routes/domainRoutes';
 
 const app = express();
 
@@ -54,6 +55,7 @@ app.use('/api/admin/orders', adminOrdersRoutes);
 app.use('/api/admin/users', adminUsersRoutes);
 app.use('/api/config', configRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/domains', domainRoutes);
 
 // Ruta de health check
 app.get('/api/health', (req, res) => {

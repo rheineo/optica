@@ -316,3 +316,18 @@ model ConfigHistory {
   @@index([configKey])
   @@index([updatedAt])
 }
+
+model Domain {
+  id          String   @id @default(cuid())
+  tipo        String   // color, forma, genero, material, proteccion_uv, etc.
+  codigo      String   // valor interno: negro_mate, aviador, unisex
+  nombre      String   // valor visible: Negro Mate, Aviador, Unisex
+  orden       Int      @default(0)
+  activo      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([tipo, codigo])
+  @@index([tipo])
+  @@index([activo])
+}

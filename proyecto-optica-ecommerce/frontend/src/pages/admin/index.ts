@@ -6,3 +6,4 @@ export { AdminOrderDetail } from './AdminOrderDetail';
 export { AdminUsers } from './AdminUsers';
 export { AdminUserDetail } from './AdminUserDetail';
 export { AdminConfig } from './AdminConfig';
+export { AdminDomains } from './AdminDomains';

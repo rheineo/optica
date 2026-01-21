@@ -5,6 +5,7 @@ import { adminApi } from '../../api/admin';
 import type { ProductFormData } from '../../api/admin';
 import type { Category } from '../../types';
 import { productsApi } from '../../api/products';
+import { domainsApi, type DomainsGrouped } from '../../api/domains';
 import { ImageUploader } from '../../components/admin/ImageUploader';
 import toast from 'react-hot-toast';
 
@@ -36,15 +37,28 @@ export function AdminProductForm() {
 
   const [formData, setFormData] = useState<ProductFormData>(initialFormData);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [domains, setDomains] = useState<DomainsGrouped | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     fetchCategories();
+    fetchDomains();
     if (isEditing && id) {
       fetchProduct(id);
     }
   }, [id]);
+
+  const fetchDomains = async () => {
+    try {
+      const response = await domainsApi.getAll();
+      if (response.success && response.data) {
+        setDomains(response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching domains:', error);
+    }
+  };
 
   const fetchCategories = async () => {
     try {
@@ -314,6 +328,117 @@ export function AdminProductForm() {
                 min="0"
                 className="input"
               />
+            </div>
+          </div>
+        </div>
+
+        {/* Características */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-4">
+          <h2 className="text-base font-semibold text-gray-900 mb-3">Características</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Color</label>
+              <select
+                value={(formData.caracteristicas as Record<string, unknown>)?.color as string || ''}
+                onChange={(e) => setFormData((prev) => ({
+                  ...prev,
+                  caracteristicas: { ...prev.caracteristicas as Record<string, unknown>, color: e.target.value }
+                }))}
+                className="input"
+              >
+                <option value="">Seleccionar color</option>
+                {domains?.color?.map((opt) => (
+                  <option key={opt.codigo} value={opt.codigo}>{opt.nombre}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Forma</label>
+              <select
+                value={(formData.caracteristicas as Record<string, unknown>)?.forma as string || ''}
+                onChange={(e) => setFormData((prev) => ({
+                  ...prev,
+                  caracteristicas: { ...prev.caracteristicas as Record<string, unknown>, forma: e.target.value }
+                }))}
+                className="input"
+              >
+                <option value="">Seleccionar forma</option>
+                {domains?.forma?.map((opt) => (
+                  <option key={opt.codigo} value={opt.codigo}>{opt.nombre}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Género</label>
+              <select
+                value={(formData.caracteristicas as Record<string, unknown>)?.genero as string || ''}
+                onChange={(e) => setFormData((prev) => ({
+                  ...prev,
+                  caracteristicas: { ...prev.caracteristicas as Record<string, unknown>, genero: e.target.value }
+                }))}
+                className="input"
+              >
+                <option value="">Seleccionar género</option>
+                {domains?.genero?.map((opt) => (
+                  <option key={opt.codigo} value={opt.codigo}>{opt.nombre}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Material</label>
+              <select
+                value={(formData.caracteristicas as Record<string, unknown>)?.material as string || ''}
+                onChange={(e) => setFormData((prev) => ({
+                  ...prev,
+                  caracteristicas: { ...prev.caracteristicas as Record<string, unknown>, material: e.target.value }
+                }))}
+                className="input"
+              >
+                <option value="">Seleccionar material</option>
+                {domains?.material?.map((opt) => (
+                  <option key={opt.codigo} value={opt.codigo}>{opt.nombre}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Polarizado</label>
+              <select
+                value={(formData.caracteristicas as Record<string, unknown>)?.polarizado === true ? 'si' : (formData.caracteristicas as Record<string, unknown>)?.polarizado === false ? 'no' : ''}
+                onChange={(e) => setFormData((prev) => ({
+                  ...prev,
+                  caracteristicas: { 
+                    ...prev.caracteristicas as Record<string, unknown>, 
+                    polarizado: e.target.value === 'si' ? true : e.target.value === 'no' ? false : undefined 
+                  }
+                }))}
+                className="input"
+              >
+                <option value="">Seleccionar</option>
+                {domains?.polarizado?.map((opt) => (
+                  <option key={opt.codigo} value={opt.codigo}>{opt.nombre}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Protección UV</label>
+              <select
+                value={(formData.caracteristicas as Record<string, unknown>)?.proteccion_uv as string || ''}
+                onChange={(e) => setFormData((prev) => ({
+                  ...prev,
+                  caracteristicas: { ...prev.caracteristicas as Record<string, unknown>, proteccion_uv: e.target.value }
+                }))}
+                className="input"
+              >
+                <option value="">Seleccionar</option>
+                {domains?.proteccion_uv?.map((opt) => (
+                  <option key={opt.codigo} value={opt.codigo}>{opt.nombre}</option>
+                ))}
+              </select>
             </div>
           </div>
         </div>

@@ -7,7 +7,8 @@ import {
   Settings,
   LogOut,
   ChevronLeft,
-  Menu
+  Menu,
+  List
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -27,6 +28,7 @@ const navItems: NavItem[] = [
   { label: 'Productos', path: '/admin/productos', icon: <Package className="w-5 h-5" /> },
   { label: 'Pedidos', path: '/admin/pedidos', icon: <ShoppingCart className="w-5 h-5" /> },
   { label: 'Usuarios', path: '/admin/usuarios', icon: <Users className="w-5 h-5" /> },
+  { label: 'Dominios', path: '/admin/dominios', icon: <List className="w-5 h-5" /> },
   { label: 'Configuración', path: '/admin/configuracion', icon: <Settings className="w-5 h-5" /> },
 ];
 
