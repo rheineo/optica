@@ -9,6 +9,11 @@ import { errorHandler } from './middlewares/errorHandler';
 import authRoutes from './routes/authRoutes';
 import productsRoutes from './routes/productsRoutes';
 import cartRoutes from './routes/cartRoutes';
+import adminOrdersRoutes from './routes/adminOrdersRoutes';
+import adminUsersRoutes from './routes/adminUsersRoutes';
+import configRoutes from './routes/configRoutes';
+import uploadRoutes from './routes/uploadRoutes';
+import domainRoutes from './routes/domainRoutes';
 
 const app = express();
 
@@ -46,6 +51,11 @@ app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productsRoutes);
 app.use('/api/cart', cartRoutes);
+app.use('/api/admin/orders', adminOrdersRoutes);
+app.use('/api/admin/users', adminUsersRoutes);
+app.use('/api/config', configRoutes);
+app.use('/api/upload', uploadRoutes);
+app.use('/api/domains', domainRoutes);
 
 // Ruta de health check
 app.get('/api/health', (req, res) => {

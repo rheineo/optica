@@ -16,6 +16,31 @@ datasource db {
 enum Role {
   CLIENTE
   ADMIN
+  SUPER_ADMIN
+}
+
+enum EstadoCuenta {
+  ACTIVO
+  INACTIVO
+  BLOQUEADO
+  PENDIENTE
+  ELIMINADO
+}
+
+enum NivelCliente {
+  NUEVO
+  REGULAR
+  FRECUENTE
+  VIP
+  PLATINUM
+}
+
+enum TipoDocumento {
+  CC        // Cédula de Ciudadanía
+  CE        // Cédula de Extranjería
+  TI        // Tarjeta de Identidad
+  PASAPORTE
+  NIT
 }
 
 enum Categoria {
@@ -26,26 +51,87 @@ enum Categoria {
 }
 
 enum EstadoOrden {
-  PENDIENTE
+  PENDIENTE_PAGO
   PAGADO
+  PROCESANDO
+  LISTO_PARA_ENVIO
   ENVIADO
+  EN_DISTRIBUCION
   ENTREGADO
   CANCELADO
+  DEVOLUCION
+  REEMBOLSADO
+}
+
+enum EstadoPago {
+  PENDIENTE
+  APROBADO
+  RECHAZADO
+  REEMBOLSADO
+}
+
+enum MetodoPago {
+  TARJETA_CREDITO
+  TARJETA_DEBITO
+  PSE
+  EFECTIVO_CONTRAENTREGA
+  TRANSFERENCIA
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  name          String
-  password      String
-  phone         String?
-  role          Role      @default(CLIENTE)
-  emailVerified DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  orders        Order[]
-  addresses     Address[]
-  cart          Cart?
+  id              String         @id @default(cuid())
+  email           String         @unique
+  name            String
+  password        String
+  phone           String?
+  role            Role           @default(CLIENTE)
+  estado          EstadoCuenta   @default(ACTIVO)
+  nivelCliente    NivelCliente   @default(NUEVO)
+  
+  // Documento de identidad
+  tipoDocumento   TipoDocumento?
+  numeroDocumento String?
+  
+  // Verificaciones
+  emailVerified   Boolean        @default(false)
+  emailVerifiedAt DateTime?
+  phoneVerified   Boolean        @default(false)
+  
+  // Seguridad
+  lastLogin       DateTime?
+  loginAttempts   Int            @default(0)
+  blockedAt       DateTime?
+  blockedBy       String?
+  motivoBloqueo   String?
+  
+  // Recuperación de contraseña
+  resetToken      String?
+  resetTokenExp   DateTime?
+  
+  // Soft delete
+  deletedAt       DateTime?
+  deletedBy       String?
+  
+  // Notas admin
+  notasInternas   String?       @db.Text
+  etiquetas       String[]
+  
+  // Estadísticas
+  totalCompras    Int           @default(0)
+  totalGastado    Float         @default(0)
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  orders          Order[]
+  addresses       Address[]
+  cart            Cart?
+
+  @@index([email])
+  @@index([role])
+  @@index([estado])
+  @@index([nivelCliente])
+  @@index([createdAt])
 }
 
 model Category {
@@ -89,21 +175,49 @@ model Inventory {
 }
 
 model Order {
-  id             String      @id @default(cuid())
-  numero         String      @unique
-  userId         String
-  subtotal       Float
-  descuento      Float       @default(0)
-  costoEnvio     Float       @default(0)
-  total          Float
-  estadoPago     String      @default("pendiente")
-  estadoEnvio    EstadoOrden @default(PENDIENTE)
-  direccionEnvio Json        // Dirección completa
-  metodoPago     String
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
-  user           User        @relation(fields: [userId], references: [id])
-  items          OrderItem[]
+  id                   String      @id @default(cuid())
+  numero               String      @unique
+  userId               String
+  subtotal             Float
+  descuento            Float       @default(0)
+  costoEnvio           Float       @default(0)
+  total                Float
+  estadoPedido         EstadoOrden @default(PENDIENTE_PAGO)
+  estadoPago           EstadoPago  @default(PENDIENTE)
+  direccionEnvio       Json
+  metodoPago           MetodoPago
+  
+  // Logística
+  transportadora       String?
+  numeroGuia           String?
+  fechaEstimadaEntrega DateTime?
+  fechaEntregaReal     DateTime?
+  
+  // Notas
+  notasCliente         String?
+  notasInternas        String?
+  
+  // Auditoría
+  historialEstados     Json[]
+  procesadoPor         String?
+  canceladoPor         String?
+  motivoCancelacion    String?
+  
+  // Timestamps
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+  fechaPago            DateTime?
+  fechaEnvio           DateTime?
+  fechaEntrega         DateTime?
+  
+  user                 User        @relation(fields: [userId], references: [id])
+  items                OrderItem[]
+
+  @@index([userId])
+  @@index([estadoPedido])
+  @@index([estadoPago])
+  @@index([createdAt])
+  @@index([numero])
 }
 
 model OrderItem {
@@ -146,4 +260,59 @@ model Address {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id])
+}
+
+// ==================== CONFIGURACIÓN ====================
+
+enum TipoConfig {
+  TEXT
+  NUMBER
+  BOOLEAN
+  JSON
+  IMAGE
+  EMAIL
+  URL
+  PASSWORD
+}
+
+enum CategoriaConfig {
+  EMPRESA
+  PAGOS
+  ENVIOS
+  IMPUESTOS
+  EMAILS
+  SITIO
+  SEO
+  SEGURIDAD
+  OPTICA
+  LEGAL
+}
+
+model Config {
+  id          String          @id @default(cuid())
+  key         String          @unique
+  value       String          @db.Text
+  tipo        TipoConfig
+  categoria   CategoriaConfig
+  descripcion String?
+  isPublic    Boolean         @default(false)
+  
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  updatedBy   String?
+  
+  @@index([categoria])
+  @@index([key])
+}
+
+model ConfigHistory {
+  id          String   @id @default(cuid())
+  configKey   String
+  oldValue    String?  @db.Text
+  newValue    String   @db.Text
+  updatedBy   String
+  updatedAt   DateTime @default(now())
+  
+  @@index([configKey])
+  @@index([updatedAt])
 }

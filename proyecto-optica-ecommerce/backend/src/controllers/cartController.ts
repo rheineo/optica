@@ -6,6 +6,20 @@ export const getCart = async (req: AuthRequest, res: Response): Promise<void> =>
   try {
     const userId = req.user?.userId;
 
+    // Verificar que el usuario existe
+    const userExists = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true },
+    });
+
+    if (!userExists) {
+      res.status(401).json({
+        success: false,
+        error: 'Usuario no encontrado. Por favor inicie sesión nuevamente.',
+      } as ApiResponse);
+      return;
+    }
+
     let cart = await prisma.cart.findUnique({
       where: { userId },
       include: {
@@ -59,6 +73,20 @@ export const addToCart = async (req: AuthRequest, res: Response): Promise<void> 
   try {
     const userId = req.user?.userId;
     const { productId, cantidad = 1 } = req.body;
+
+    // Verificar que el usuario existe
+    const userExists = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true },
+    });
+
+    if (!userExists) {
+      res.status(401).json({
+        success: false,
+        error: 'Usuario no encontrado. Por favor inicie sesión nuevamente.',
+      } as ApiResponse);
+      return;
+    }
 
     const product = await prisma.product.findUnique({
       where: { id: productId },

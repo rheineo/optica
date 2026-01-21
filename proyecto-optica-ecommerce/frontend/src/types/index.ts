@@ -82,4 +82,6 @@ export interface RegisterData {
   password: string;
   name: string;
   phone?: string;
+  tipoDocumento?: string;
+  numeroDocumento?: string;
 }
