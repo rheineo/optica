@@ -11,6 +11,7 @@ import productsRoutes from './routes/productsRoutes';
 import cartRoutes from './routes/cartRoutes';
 import adminOrdersRoutes from './routes/adminOrdersRoutes';
 import adminUsersRoutes from './routes/adminUsersRoutes';
+import configRoutes from './routes/configRoutes';
 
 const app = express();
 
@@ -50,6 +51,7 @@ app.use('/api/products', productsRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/admin/orders', adminOrdersRoutes);
 app.use('/api/admin/users', adminUsersRoutes);
+app.use('/api/config', configRoutes);
 
 // Ruta de health check
 app.get('/api/health', (req, res) => {

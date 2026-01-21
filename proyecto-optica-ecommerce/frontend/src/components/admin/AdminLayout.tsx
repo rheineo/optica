@@ -24,7 +24,7 @@ export function AdminLayout() {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="fixed inset-0 flex bg-gray-100">
       <AdminSidebar 
         collapsed={sidebarCollapsed} 
         onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} 

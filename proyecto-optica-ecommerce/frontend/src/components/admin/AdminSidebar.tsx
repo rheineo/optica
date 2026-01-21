@@ -45,7 +45,7 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
     <aside 
       className={`
         ${collapsed ? 'w-16' : 'w-64'} 
-        bg-gray-900 text-white min-h-screen flex flex-col transition-all duration-300
+        bg-gray-900 text-white h-full flex flex-col transition-all duration-300 flex-shrink-0
       `}
     >
       {/* Header con botón hamburguesa */}

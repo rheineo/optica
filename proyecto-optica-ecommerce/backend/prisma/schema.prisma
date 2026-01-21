@@ -261,3 +261,58 @@ model Address {
   updatedAt DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id])
 }
+
+// ==================== CONFIGURACIÓN ====================
+
+enum TipoConfig {
+  TEXT
+  NUMBER
+  BOOLEAN
+  JSON
+  IMAGE
+  EMAIL
+  URL
+  PASSWORD
+}
+
+enum CategoriaConfig {
+  EMPRESA
+  PAGOS
+  ENVIOS
+  IMPUESTOS
+  EMAILS
+  SITIO
+  SEO
+  SEGURIDAD
+  OPTICA
+  LEGAL
+}
+
+model Config {
+  id          String          @id @default(cuid())
+  key         String          @unique
+  value       String          @db.Text
+  tipo        TipoConfig
+  categoria   CategoriaConfig
+  descripcion String?
+  isPublic    Boolean         @default(false)
+  
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  updatedBy   String?
+  
+  @@index([categoria])
+  @@index([key])
+}
+
+model ConfigHistory {
+  id          String   @id @default(cuid())
+  configKey   String
+  oldValue    String?  @db.Text
+  newValue    String   @db.Text
+  updatedBy   String
+  updatedAt   DateTime @default(now())
+  
+  @@index([configKey])
+  @@index([updatedAt])
+}

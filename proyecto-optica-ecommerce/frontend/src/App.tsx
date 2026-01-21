@@ -13,7 +13,7 @@ import { Register } from './pages/Register';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword';
 import { Cart } from './pages/Cart';
-import { AdminDashboard, AdminProducts, AdminProductForm, AdminOrders, AdminOrderDetail, AdminUsers, AdminUserDetail } from './pages/admin';
+import { AdminDashboard, AdminProducts, AdminProductForm, AdminOrders, AdminOrderDetail, AdminUsers, AdminUserDetail, AdminConfig } from './pages/admin';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,6 +47,7 @@ function App() {
                 <Route path="pedidos/:id" element={<AdminOrderDetail />} />
                 <Route path="usuarios" element={<AdminUsers />} />
                 <Route path="usuarios/:id" element={<AdminUserDetail />} />
+                <Route path="configuracion" element={<AdminConfig />} />
               </Route>
               
               {/* Main pages - con Layout */}
