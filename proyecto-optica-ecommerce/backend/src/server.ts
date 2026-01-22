@@ -20,9 +20,30 @@ const app = express();
 // Middlewares de seguridad
 app.use(helmet());
 
-// CORS - permitir todos los orígenes en desarrollo
+// CORS - configuración para producción y desarrollo
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://liney-vision.vercel.app',
+  'https://optica-rho.vercel.app',
+];
+
 app.use(cors({
-  origin: true,
+  origin: (origin, callback) => {
+    // Permitir requests sin origin (como mobile apps o Postman)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      // En producción, permitir cualquier subdominio de vercel.app
+      if (origin.endsWith('.vercel.app')) {
+        callback(null, true);
+      } else {
+        callback(null, true); // Temporalmente permitir todos para debug
+      }
+    }
+  },
   credentials: true,
 }));
 
