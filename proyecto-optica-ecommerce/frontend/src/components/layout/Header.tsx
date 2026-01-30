@@ -95,28 +95,28 @@ export function Header() {
                   <button className="w-10 h-10 flex items-center justify-center text-white/70 hover:text-gold transition-colors">
                     <User className="w-5 h-5" />
                   </button>
-                  <div className="absolute right-0 mt-2 w-48 bg-dark-surface border border-white/10 rounded-xl shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                    <div className="px-4 py-2 border-b border-white/10">
-                      <p className="text-white font-medium text-sm">{user?.name?.split(' ')[0]}</p>
-                      <p className="text-white/50 text-xs">{user?.email}</p>
+                  <div className="absolute right-0 mt-2 w-56 bg-[#0a0c10] border border-[#FFD700]/30 rounded-xl shadow-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <div className="px-4 py-3 border-b border-[#FFD700]/20 bg-[#FFD700]/10">
+                      <p className="text-[#FFD700] font-semibold text-sm">{user?.name?.split(' ')[0]}</p>
+                      <p className="text-gray-400 text-xs">{user?.email}</p>
                     </div>
                     <Link
                       to="/perfil"
-                      className="block px-4 py-2 text-white/70 hover:text-gold hover:bg-white/5 transition-colors"
+                      className="block px-4 py-3 text-white hover:text-[#FFD700] hover:bg-[#FFD700]/10 transition-colors"
                     >
                       Mi Perfil
                     </Link>
                     {user?.role === 'ADMIN' && (
                       <Link
                         to="/admin"
-                        className="block px-4 py-2 text-gold hover:bg-white/5 transition-colors"
+                        className="block px-4 py-3 text-[#FFD700] hover:bg-[#FFD700]/10 transition-colors font-medium"
                       >
                         Panel Admin
                       </Link>
                     )}
                     <button
                       onClick={logout}
-                      className="w-full text-left px-4 py-2 text-white/70 hover:text-gold hover:bg-white/5 flex items-center gap-2 transition-colors"
+                      className="w-full text-left px-4 py-3 text-white hover:text-[#FFD700] hover:bg-[#FFD700]/10 flex items-center gap-2 transition-colors border-t border-[#FFD700]/20 mt-1"
                     >
                       <LogOut className="w-4 h-4" />
                       <span>Cerrar Sesión</span>
