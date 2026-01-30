@@ -13,6 +13,7 @@ import { Register } from './pages/Register';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword';
 import { Cart } from './pages/Cart';
+import { Profile } from './pages/Profile';
 import { AdminDashboard, AdminProducts, AdminProductForm, AdminOrders, AdminOrderDetail, AdminUsers, AdminUserDetail, AdminConfig, AdminDomains } from './pages/admin';
 
 const queryClient = new QueryClient({
@@ -57,6 +58,7 @@ function App() {
                 <Route path="productos" element={<Products />} />
                 <Route path="producto/:id" element={<ProductDetail />} />
                 <Route path="carrito" element={<Cart />} />
+                <Route path="perfil" element={<Profile />} />
               </Route>
             </Routes>
             <Toaster
