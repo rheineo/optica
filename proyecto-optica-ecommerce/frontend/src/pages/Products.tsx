@@ -4,7 +4,7 @@ import { Filter, X, ChevronDown } from 'lucide-react';
 import { productsApi } from '../api/products';
 import type { Product, Category } from '../types';
 import { ProductGrid } from '../components/product/ProductGrid';
-import { getCategoryLabel } from '../utils/formatters';
+import { getCategoryLabel, formatCategoryName } from '../utils/formatters';
 
 export function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -130,7 +130,7 @@ export function Products() {
                       onChange={() => updateFilter('categoria', cat.slug)}
                       className="w-4 h-4 text-primary-600 border-gray-300 focus:ring-primary-500"
                     />
-                    <span className="ml-2 text-gray-700">{cat.nombre}</span>
+                    <span className="ml-2 text-gray-700">{formatCategoryName(cat.nombre)}</span>
                     <span className="ml-auto text-gray-400 text-sm">
                       ({cat._count?.products || 0})
                     </span>
@@ -220,7 +220,7 @@ export function Products() {
                         }}
                         className="w-4 h-4 text-primary-600"
                       />
-                      <span className="ml-2 text-gray-700">{cat.nombre}</span>
+                      <span className="ml-2 text-gray-700">{formatCategoryName(cat.nombre)}</span>
                     </label>
                   ))}
                 </div>

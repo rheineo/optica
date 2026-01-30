@@ -48,6 +48,7 @@ enum Categoria {
   MONTURAS_OFTALMICA
   LENTES_CONTACTO
   ACCESORIOS
+  MONTURAS_NINOS
 }
 
 enum EstadoOrden {
@@ -138,6 +139,9 @@ model Category {
   id          String     @id @default(cuid())
   nombre      Categoria
   descripcion String?
+  imagen      String?    // URL de imagen en Cloudinary
+  slug        String?    // Slug para URLs amigables
+  activo      Boolean    @default(true) // Para ocultar categorías sin eliminarlas
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   products    Product[]
