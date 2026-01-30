@@ -40,20 +40,26 @@ async function main() {
   const cliente1 = await prisma.user.create({
     data: {
       email: 'juan.perez@email.com',
-      name: 'Juan Pérez',
+      name: 'Juan Pedro',
+      apellidos: 'Perez',
       password: hashedClientPassword,
       phone: '3009876543',
       role: Role.CLIENTE,
+      tipoDocumento: 'CC',
+      numeroDocumento: '1234567890',
     },
   });
 
   const cliente2 = await prisma.user.create({
     data: {
       email: 'maria.garcia@email.com',
-      name: 'María García',
+      name: 'María Magdalena',
+      apellidos: 'Garcia',
       password: hashedClientPassword,
       phone: '3005551234',
       role: Role.CLIENTE,
+      tipoDocumento: 'CC',
+      numeroDocumento: '0987654321',
     },
   });
 
@@ -454,9 +460,13 @@ async function main() {
     data: {
       userId: cliente1.id,
       nombre: 'Casa',
-      direccion: 'Calle 123 #45-67, Apto 801',
-      ciudad: 'Bogotá',
+      destinatario: 'Juan Pérez',
       telefono: '3009876543',
+      departamento: 'Bogotá D.C.',
+      municipio: 'Bogotá',
+      direccion: 'Calle 123 #45-67',
+      infoAdicional: 'Apto 801',
+      barrio: 'Chapinero',
       esDefault: true,
     },
   });
@@ -465,9 +475,13 @@ async function main() {
     data: {
       userId: cliente2.id,
       nombre: 'Oficina',
-      direccion: 'Carrera 7 #72-41, Oficina 502',
-      ciudad: 'Bogotá',
+      destinatario: 'María García',
       telefono: '3005551234',
+      departamento: 'Bogotá D.C.',
+      municipio: 'Bogotá',
+      direccion: 'Carrera 7 #72-41',
+      infoAdicional: 'Oficina 502',
+      barrio: 'Centro Internacional',
       esDefault: true,
     },
   });

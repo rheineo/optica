@@ -83,6 +83,7 @@ model User {
   id              String         @id @default(cuid())
   email           String         @unique
   name            String
+  apellidos       String?
   password        String
   phone           String?
   role            Role           @default(CLIENTE)
@@ -254,16 +255,24 @@ model CartItem {
 }
 
 model Address {
-  id        String   @id @default(cuid())
-  userId    String
-  nombre    String
-  direccion String
-  ciudad    String
-  telefono  String
-  esDefault Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id])
+  id              String   @id @default(cuid())
+  userId          String
+  nombre          String   // Alias de la dirección (Casa, Oficina, etc.)
+  destinatario    String   // Nombre completo de quien recibe
+  telefono        String
+  departamento    String   // Departamento (ej: Bogotá D.C.)
+  municipio       String   // Ciudad/Municipio
+  direccion       String   // Calle, carrera, número
+  infoAdicional   String?  // Apartamento, piso, etc.
+  barrio          String?
+  codigoPostal    String?
+  esDefault       Boolean  @default(false)
+  activo          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  user            User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
 }
 
 // ==================== CONFIGURACIÓN ====================
