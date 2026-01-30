@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
 
 *,
 *::before,
@@ -20,6 +21,62 @@ body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Liney Vision Design System - Futuristic Eyewear */
+
+/* Hero section dark overlay */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 24, 33, 0.7) 0%,
+    rgba(20, 24, 33, 0.85) 50%,
+    rgba(20, 24, 33, 0.95) 100%
+  );
+}
+
+/* Gold gradient text */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #FFD700, #FFE44D, #FFD700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass card effect */
+.glass-card {
+  backdrop-filter: blur(16px);
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255, 215, 0, 0.15);
+}
+
+/* Gold border glow */
+.gold-glow {
+  box-shadow: 0 0 30px -5px rgba(255, 215, 0, 0.3);
+}
+
+/* Counter number animation */
+.counter-glow {
+  text-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+}
+
+/* Shimmer effect */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 215, 0, 0.1) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 .btn {
