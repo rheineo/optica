@@ -35,7 +35,7 @@ postgresql://neondb_owner:npg_gH7fAbZSql1K@ep-broad-dew-ah5cdytb-pooler.c-3.us-e
    - **Name**: `lineyvision-api`
    - **Root Directory**: `backend`
    - **Environment**: `Node`
-   - **Build Command**: `npm install && npm run build`
+   - **Build Command**: `npm install && npx prisma generate && npx prisma db push && npm run build`
    - **Start Command**: `npm start`
 
 ### Variables de Entorno (Environment Variables):
