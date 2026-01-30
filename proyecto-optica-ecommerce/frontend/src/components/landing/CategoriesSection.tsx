@@ -15,6 +15,11 @@ const categoryImages: Record<string, string> = {
   ACCESORIOS: 'https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=600&h=400&fit=crop',
 };
 
+// Formatea el nombre de la categoría reemplazando _ por espacios
+const formatCategoryName = (nombre: string): string => {
+  return nombre.replace(/_/g, ' ');
+};
+
 export function CategoriesSection({ categories, isLoading }: CategoriesSectionProps) {
   if (isLoading) {
     return (
@@ -71,7 +76,7 @@ export function CategoriesSection({ categories, isLoading }: CategoriesSectionPr
                 {/* Content */}
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <h3 className="text-lg font-bold text-white mb-1">
-                    {category.nombre}
+                    {formatCategoryName(category.nombre)}
                   </h3>
                   <div className="flex items-center justify-between">
                     <p className="text-white/70 text-sm">

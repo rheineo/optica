@@ -252,6 +252,9 @@ export const deleteProduct = async (req: AuthRequest, res: Response): Promise<vo
 export const getCategories = async (req: Request, res: Response): Promise<void> => {
   try {
     const categories = await prisma.category.findMany({
+      where: {
+        activo: true,
+      },
       include: {
         _count: {
           select: { products: true },
