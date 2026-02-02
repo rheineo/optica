@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
+import LineyVisionLogo from '../../assets/LineyVisionLogo';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,7 +29,7 @@ export function Header() {
     { name: 'Inicio', href: '/' },
     { name: 'Catálogo', href: '/productos' },
     { name: 'Monturas de Sol', href: '/productos?categoria=MONTURAS_SOL' },
-    { name: 'Lentes de Contacto', href: '/productos?categoria=LENTES_CONTACTO' },
+    { name: 'Monturas para Niños', href: '/productos?categoria=MONTURAS_NINOS' },
   ];
 
   // Header siempre oscuro
@@ -43,8 +44,9 @@ export function Header() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link to="/" className="font-display text-xl font-bold text-gradient-gold">
-              LINEY VISION
+            <Link to="/" className="flex items-center gap-2 font-display text-xl font-bold text-gradient-gold">
+              <LineyVisionLogo size={40} />
+              <span>LINEY VISION</span>
             </Link>
 
             {/* Desktop Nav */}

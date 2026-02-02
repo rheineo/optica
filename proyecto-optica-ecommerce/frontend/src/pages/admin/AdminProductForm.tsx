@@ -12,7 +12,7 @@ import toast from 'react-hot-toast';
 const CATEGORIAS = [
   { value: 'MONTURAS_SOL', label: 'Monturas de Sol' },
   { value: 'MONTURAS_OFTALMICA', label: 'Monturas Oftálmicas' },
-  { value: 'LENTES_CONTACTO', label: 'Lentes de Contacto' },
+  { value: 'MONTURAS_NINOS', label: 'Monturas para Niños' },
   { value: 'ACCESORIOS', label: 'Accesorios' },
 ];
 

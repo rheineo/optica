@@ -21,7 +21,7 @@ const testimonials = [
     role: 'Diseñadora',
     avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face',
     rating: 5,
-    text: 'Los lentes de contacto que compré son de excelente calidad. El proceso de compra fue muy fácil y la entrega súper rápida.',
+    text: 'Las monturas que compré son de excelente calidad. El proceso de compra fue muy fácil y la entrega súper rápida.',
   },
 ];
 

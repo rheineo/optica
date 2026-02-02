@@ -11,7 +11,7 @@ interface CategoriesSectionProps {
 const categoryImages: Record<string, string> = {
   MONTURAS_SOL: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600&h=400&fit=crop',
   MONTURAS_OFTALMICA: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=600&h=400&fit=crop',
-  LENTES_CONTACTO: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&h=400&fit=crop',
+  MONTURAS_NINOS: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&h=400&fit=crop',
   ACCESORIOS: 'https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=600&h=400&fit=crop',
 };
 

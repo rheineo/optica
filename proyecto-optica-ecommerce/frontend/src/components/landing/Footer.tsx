@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import LineyVisionLogo from '../../assets/LineyVisionLogo';
 
 const footerLinks = {
   productos: [
     { name: 'Monturas de Sol', href: '/productos?categoria=MONTURAS_SOL' },
     { name: 'Monturas Oftálmicas', href: '/productos?categoria=MONTURAS_OFTALMICA' },
-    { name: 'Lentes de Contacto', href: '/productos?categoria=LENTES_CONTACTO' },
+    { name: 'Monturas para Niños', href: '/productos?categoria=MONTURAS_NINOS' },
     { name: 'Accesorios', href: '/productos?categoria=ACCESORIOS' },
   ],
   empresa: [
@@ -35,7 +36,8 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link to="/" className="inline-block mb-6">
+            <Link to="/" className="inline-flex items-center gap-3 mb-6">
+              <LineyVisionLogo size={45} />
               <span className="font-display text-2xl font-bold text-gradient-gold">
                 LINEY VISION
               </span>
