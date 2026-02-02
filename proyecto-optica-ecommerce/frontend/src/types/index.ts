@@ -12,7 +12,7 @@ export interface Product {
   sku: string;
   nombre: string;
   marca: string;
-  categoria: 'MONTURAS_SOL' | 'MONTURAS_OFTALMICA' | 'LENTES_CONTACTO' | 'ACCESORIOS';
+  categoria: 'MONTURAS_SOL' | 'MONTURAS_OFTALMICA' | 'MONTURAS_NINOS' | 'ACCESORIOS';
   precio: number;
   descuento?: number;
   imagenes: string[];

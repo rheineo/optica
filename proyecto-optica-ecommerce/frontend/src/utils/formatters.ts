@@ -24,9 +24,8 @@ export const getCategoryLabel = (category: string): string => {
   const labels: Record<string, string> = {
     MONTURAS_SOL: 'Monturas de Sol',
     MONTURAS_OFTALMICA: 'Monturas Oftálmicas',
-    LENTES_CONTACTO: 'Lentes de Contacto',
+    MONTURAS_NINOS: 'Monturas para Niños',
     ACCESORIOS: 'Accesorios',
-    MONTURAS_NINOS: 'Monturas Niños',
   };
   return labels[category] || formatCategoryName(category);
 };

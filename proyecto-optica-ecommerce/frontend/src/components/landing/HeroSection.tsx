@@ -68,7 +68,7 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          Descubre nuestra colección de gafas y lentes de contacto con tecnología de vanguardia. 
+          Descubre nuestra colección de gafas y monturas con tecnología de vanguardia. 
           Diseño premium que redefine el estilo y la claridad visual.
         </motion.p>
 

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
+import LineyVisionLogo from '../../assets/LineyVisionLogo';
 
 export function Footer() {
   return (
@@ -7,7 +8,10 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-2xl font-bold text-primary-400 mb-4">Liney Visión</h3>
+            <div className="flex items-center gap-3 mb-4">
+              <LineyVisionLogo size={45} />
+              <h3 className="text-2xl font-bold text-primary-400">Liney Visión</h3>
+            </div>
             <p className="text-gray-400 mb-4">
               Tu tienda de confianza para gafas de sol, monturas oftálmicas y lentes de contacto de las mejores marcas.
             </p>
@@ -38,8 +42,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/productos?categoria=LENTES_CONTACTO" className="text-gray-400 hover:text-white transition-colors">
-                  Lentes de Contacto
+                <Link to="/productos?categoria=MONTURAS_NINOS" className="text-gray-400 hover:text-white transition-colors">
+                  Monturas para Niños
                 </Link>
               </li>
               <li>
